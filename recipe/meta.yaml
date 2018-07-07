@@ -1,13 +1,13 @@
 {% set name = "blis" %}
-{% set version = "0.3.3.dev0" %}
+{% set version = "0.3.3.dev1" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  url: https://github.com/flame/blis/archive/e32b2ef983ea1c3521dd3821116c0078690f125e.tar.gz
-  sha256: 673668858d7a5bb49b9f3a14f120e8c3ab9a134da9906b57aebca222ad1e4232
+  url: https://github.com/flame/blis/archive/331694e52414c0cd50048daf880a9ace9e29b94a.tar.gz
+  sha256: e4e2b2d5208aad711446fa25ef04ace0b181a574a7aa0ca4dc9706244015907d
 
 build:
   number: 0
