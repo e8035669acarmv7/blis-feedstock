@@ -25,8 +25,7 @@ case `uname` in
         clang --version
         llvm-as --version
         llvm-ar --version
-        # TODO: change intel64->x86_64 when ARG_MAX issue is fixed.
-        ./configure --disable-shared --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads intel64
+        ./configure --disable-shared --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make CPICFLAGS= LIBPTHREAD=-lpthreads AR=llvm-ar LIBM= -j${CPU_COUNT}
         make install
         make check CPICFLAGS= LIBPTHREAD=-lpthreads AR=llvm-ar LIBM= -j${CPU_COUNT}
