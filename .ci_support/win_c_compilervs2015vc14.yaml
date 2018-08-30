@@ -1,5 +1,9 @@
 c_compiler:
 - vs2015
+channel_sources:
+- conda-forge,defaults
+channel_targets:
+- conda-forge main
 perl:
 - '5.26'
 pin_run_as_build:
