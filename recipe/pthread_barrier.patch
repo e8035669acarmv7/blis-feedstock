@@ -1,0 +1,172 @@
+From d688a2b7e5a19cba44ea398a99e325e19b8fce50 Mon Sep 17 00:00:00 2001
+From: Mathieu Poumeyrol <kali@zoy.org>
+Date: Thu, 6 Sep 2018 15:25:16 +0200
+Subject: [PATCH 1/4] add an adhoc impl for pthread_barrier
+
+---
+ testsuite/src/pthread_barrier.h | 68 +++++++++++++++++++++++++++++++++
+ testsuite/src/test_libblis.h    |  3 ++
+ 2 files changed, 71 insertions(+)
+ create mode 100644 testsuite/src/pthread_barrier.h
+
+diff --git a/testsuite/src/pthread_barrier.h b/testsuite/src/pthread_barrier.h
+new file mode 100644
+index 00000000..239e63a0
+--- /dev/null
++++ b/testsuite/src/pthread_barrier.h
+@@ -0,0 +1,68 @@
++#ifdef __APPLE__
++
++#ifndef PTHREAD_BARRIER_H_
++#define PTHREAD_BARRIER_H_
++
++#include <pthread.h>
++#include <errno.h>
++
++typedef int pthread_barrierattr_t;
++typedef struct
++{
++    pthread_mutex_t mutex;
++    pthread_cond_t cond;
++    int count;
++    int tripCount;
++} pthread_barrier_t;
++
++
++inline int pthread_barrier_init(pthread_barrier_t *barrier, const pthread_barrierattr_t *attr, unsigned int count)
++{
++    if(count == 0)
++    {
++        errno = EINVAL;
++        return -1;
++    }
++    if(pthread_mutex_init(&barrier->mutex, 0) < 0)
++    {
++        return -1;
++    }
++    if(pthread_cond_init(&barrier->cond, 0) < 0)
++    {
++        pthread_mutex_destroy(&barrier->mutex);
++        return -1;
++    }
++    barrier->tripCount = count;
++    barrier->count = 0;
++
++    return 0;
++}
++
++inline int pthread_barrier_destroy(pthread_barrier_t *barrier)
++{
++    pthread_cond_destroy(&barrier->cond);
++    pthread_mutex_destroy(&barrier->mutex);
++    return 0;
++}
++
++inline int pthread_barrier_wait(pthread_barrier_t *barrier)
++{
++    pthread_mutex_lock(&barrier->mutex);
++    ++(barrier->count);
++    if(barrier->count >= barrier->tripCount)
++    {
++        barrier->count = 0;
++        pthread_cond_broadcast(&barrier->cond);
++        pthread_mutex_unlock(&barrier->mutex);
++        return 1;
++    }
++    else
++    {
++        pthread_cond_wait(&barrier->cond, &(barrier->mutex));
++        pthread_mutex_unlock(&barrier->mutex);
++        return 0;
++    }
++}
++
++#endif // PTHREAD_BARRIER_H_
++#endif // __APPLE__
+diff --git a/testsuite/src/test_libblis.h b/testsuite/src/test_libblis.h
+index c0329377..ea56973f 100644
+--- a/testsuite/src/test_libblis.h
++++ b/testsuite/src/test_libblis.h
+@@ -54,6 +54,9 @@
+ 
+ // For pthreads API.
+ #include <pthread.h>
++#ifdef __APPLE__
++#include "pthread_barrier.h"
++#endif
+ 
+ //
+ // --- Constants and types -----------------------------------------------------
+
+From a6802eab7d94b5a9de633c53beca8245b74f5dc6 Mon Sep 17 00:00:00 2001
+From: Mathieu Poumeyrol <kali@zoy.org>
+Date: Thu, 6 Sep 2018 17:16:35 +0200
+Subject: [PATCH 2/4] reinstantiate test on macos
+
+---
+ .travis.yml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/.travis.yml b/.travis.yml
+index ee7cc872..0d80a43c 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -33,7 +33,7 @@ matrix:
+   # macOS with system compiler (clang)
+   - os: osx
+     compiler: clang
+-    env: OOT=0 TEST=0 SDE=0 THR="none" CONF="auto"
++    env: OOT=0 TEST=1 SDE=0 THR="none" CONF="auto"
+ install:
+ - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo rm -f /usr/bin/as; fi
+ - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo ln -s /usr/lib/binutils-2.26/bin/as /usr/bin/as; fi
+
+From 24ecc0d94aaa9ab4df1ae6d199c4ec6d7783169f Mon Sep 17 00:00:00 2001
+From: Mathieu Poumeyrol <kali@zoy.org>
+Date: Thu, 6 Sep 2018 22:10:16 +0200
+Subject: [PATCH 3/4] use _POSIX_BARRIERS instead of __APPLE__
+
+---
+ testsuite/src/test_libblis.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/testsuite/src/test_libblis.h b/testsuite/src/test_libblis.h
+index ea56973f..73880de7 100644
+--- a/testsuite/src/test_libblis.h
++++ b/testsuite/src/test_libblis.h
+@@ -54,7 +54,7 @@
+ 
+ // For pthreads API.
+ #include <pthread.h>
+-#ifdef __APPLE__
++#if !defined(_POSIX_BARRIERS) || (_POSIX_BARRIERS < 0)
+ #include "pthread_barrier.h"
+ #endif
+ 
+
+From 4e7d06700f176a62952d7d51e41fdcbc6b7a9d5f Mon Sep 17 00:00:00 2001
+From: Mathieu Poumeyrol <kali@zoy.org>
+Date: Thu, 6 Sep 2018 23:48:31 +0200
+Subject: [PATCH 4/4] second __APPLE__
+
+---
+ testsuite/src/pthread_barrier.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/testsuite/src/pthread_barrier.h b/testsuite/src/pthread_barrier.h
+index 239e63a0..31bd27a1 100644
+--- a/testsuite/src/pthread_barrier.h
++++ b/testsuite/src/pthread_barrier.h
+@@ -1,4 +1,4 @@
+-#ifdef __APPLE__
++#if !defined(_POSIX_BARRIERS) || (_POSIX_BARRIERS < 0)
+ 
+ #ifndef PTHREAD_BARRIER_H_
+ #define PTHREAD_BARRIER_H_
+@@ -65,4 +65,4 @@ inline int pthread_barrier_wait(pthread_barrier_t *barrier)
+ }
+ 
+ #endif // PTHREAD_BARRIER_H_
+-#endif // __APPLE__
++#endif // _POSIX_BARRIERS
+
