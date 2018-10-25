@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
   sha256: 1a004d69c139e8a0448c6a6007863af3a8c3551b8d9b8b73fe08e8009f165fa8
-  patches:
-    - pthread_barrier.patch
 
 build:
   number: 0
@@ -25,9 +23,7 @@ requirements:
     - perl
     - python >=3.5
   host:
-    - pthreads-win32         # [win]
   run:
-    - pthreads-win32         # [win]
 
 test:
   commands:
@@ -37,6 +33,7 @@ test:
     - test -f $PREFIX/include/blis/cblas.h                # [unix]
     - if not exist %LIBRARY_INC%\\blis\\blis.h exit 1     # [win]
     - if not exist %LIBRARY_INC%\\blis\\cblas.h exit 1    # [win]
+    - if not exist %LIBRARY_LIB%\\blis.dll exit 1         # [win]
     - if not exist %LIBRARY_LIB%\\blis.lib exit 1         # [win]
 
 about:
