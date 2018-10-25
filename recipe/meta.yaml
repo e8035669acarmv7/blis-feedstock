@@ -1,5 +1,5 @@
 {% set name = "blis" %}
-{% set version = "0.4.1" %}
+{% set version = "0.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: a0c00e6e4ae215e8d965226c2446c2e53f121b31c3b8ff5ca983b0a51ed2fd25
+  sha256: 1a004d69c139e8a0448c6a6007863af3a8c3551b8d9b8b73fe08e8009f165fa8
   patches:
     - pthread_barrier.patch
 
