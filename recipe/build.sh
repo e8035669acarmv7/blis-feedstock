@@ -30,5 +30,8 @@ case `uname` in
         make -j${CPU_COUNT}
         make install
         make check -j${CPU_COUNT}
+        mv $PREFIX/Library/lib/libblis.lib $PREFIX/Library/lib/blis.lib
+        mv $PREFIX/Library/lib/libblis.a $PREFIX/Library/lib/libblis.lib
+        mv $PREFIX/Library/lib/libblis.1.dll $PREFIX/Library/bin/libblis.1.dll
         ;;
 esac
