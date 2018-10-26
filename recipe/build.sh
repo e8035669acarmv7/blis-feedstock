@@ -26,7 +26,7 @@ case `uname` in
         clang --version
         llvm-as --version
         llvm-ar --version
-        ./configure --enable-shared --disable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+        ./configure --enable-shared --enable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make -j${CPU_COUNT}
         make install
         make check -j${CPU_COUNT}
