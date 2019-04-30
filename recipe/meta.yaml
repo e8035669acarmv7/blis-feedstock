@@ -1,5 +1,5 @@
 {% set name = "blis" %}
-{% set version = "0.5.1" %}
+{% set version = "0.5.2" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,12 @@ package:
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: 7816a1f6085b1d779f074bca2435c195c524582edbb04d9cd399dade9187a72d
+  sha256: 1300ef8b1648a337fa7fe6d5b676faf0e41d80209457831535a9ef3cb54a7f6e
+  patches:
+    # https://github.com/flame/blis/pull/305
+    - 305.patch
+    # https://github.com/flame/blis/pull/306
+    - 306.patch
 
 build:
   number: 0
@@ -17,6 +22,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - clangdev               # [win or osx]
+    - llvmdev                # [win or osx]
     - posix                  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]

@@ -1,7 +1,10 @@
+CFLAGS=$(echo "${CFLAGS}" | sed "s/-march=[a-zA-Z0-9]*//g")
+CFLAGS=$(echo "${CFLAGS}" | sed "s/-mtune=[a-zA-Z0-9]*//g")
+
 case `uname` in
     Darwin)
         export CC=$BUILD_PREFIX/bin/clang
-        ./configure --prefix=$PREFIX --enable-cblas --enable-threading=pthreads x86_64
+        ./configure --prefix=$PREFIX --enable-cblas --enable-threading=pthreads intel64
         make CC_VENDOR=clang -j${CPU_COUNT}
         make install
         make check -j${CPU_COUNT}
