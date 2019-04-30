@@ -1,6 +1,7 @@
 case `uname` in
     Darwin)
         export CC=$BUILD_PREFIX/bin/clang
+        CFLAGS=$(echo "${CFLAGS}" | sed "s/-march=core2//g")
         ./configure --prefix=$PREFIX --enable-cblas --enable-threading=pthreads intel64
         make CC_VENDOR=clang -j${CPU_COUNT}
         make install
