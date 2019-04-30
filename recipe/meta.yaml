@@ -22,6 +22,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - clangdev               # [win or osx]
+    - llvmdev                # [win or osx]
     - posix                  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
