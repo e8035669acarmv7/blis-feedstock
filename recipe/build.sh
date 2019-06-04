@@ -29,12 +29,16 @@ case `uname` in
         clang --version
         llvm-as --version
         llvm-ar --version
-        ./configure --enable-shared --enable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+        ./configure --disable-shared --enable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+        make -j${CPU_COUNT}
+        make install
+        make check -j${CPU_COUNT}
+ 
+        ./configure --enable-shared --disable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make -j${CPU_COUNT}
         make install
         mv $PREFIX/Library/lib/libblis.lib $PREFIX/Library/lib/blis.lib
         mv $PREFIX/Library/lib/libblis.a $PREFIX/Library/lib/libblis.lib
         mv $PREFIX/Library/lib/libblis.*.dll $PREFIX/Library/bin/
-        make check -j${CPU_COUNT}
         ;;
 esac
