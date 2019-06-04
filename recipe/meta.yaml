@@ -8,11 +8,6 @@ package:
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
   sha256: ad5765cc3f492d0c663f494850dafc4d72f901c332eb442f404814ff2995e5a9
-  patches:
-    # https://github.com/flame/blis/pull/305
-    - 305.patch
-    # https://github.com/flame/blis/pull/306
-    - 306.patch
 
 build:
   number: 0
