@@ -1,6 +1,9 @@
 CFLAGS=$(echo "${CFLAGS}" | sed "s/-march=[a-zA-Z0-9]*//g")
 CFLAGS=$(echo "${CFLAGS}" | sed "s/-mtune=[a-zA-Z0-9]*//g")
 
+# Avoid sorting LDFLAGS
+sed -i.bak 's/LDFLAGS := $(sort $(LDFLAGS))//g' common.mk
+
 case $target_platform in
     osx-*)
         export CC=$BUILD_PREFIX/bin/clang
