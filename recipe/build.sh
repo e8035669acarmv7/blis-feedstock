@@ -30,8 +30,8 @@ case $target_platform in
         ./configure --enable-shared --disable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make -j${CPU_COUNT}
         make install
-        mv $PREFIX/Library/lib/libblis.lib $PREFIX/Library/lib/blis.lib
-        mv $PREFIX/Library/lib/libblis.a $PREFIX/Library/lib/libblis.lib
-        mv $PREFIX/Library/lib/libblis.*.dll $PREFIX/Library/bin/
+        mv $PREFIX/lib/libblis.lib $PREFIX/lib/blis.lib
+        mv $PREFIX/lib/libblis.a $PREFIX/lib/libblis.lib
+        mv $PREFIX/lib/libblis.*.dll $PREFIX/bin/
         ;;
 esac
