@@ -16,8 +16,8 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - clangdev               # [win or osx]
-    - llvmdev                # [win or osx]
+    - clangxx                # [win or osx]
+    - llvm-tools             # [win or osx]
     - posix                  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
@@ -34,7 +34,7 @@ test:
     - test -f $PREFIX/include/blis/cblas.h                # [unix]
     - if not exist %LIBRARY_INC%\\blis\\blis.h exit 1     # [win]
     - if not exist %LIBRARY_INC%\\blis\\cblas.h exit 1    # [win]
-    - if not exist %LIBRARY_BIN%\\libblis.2.dll exit 1    # [win]
+    - if not exist %LIBRARY_BIN%\\libblis.3.dll exit 1    # [win]
     - if not exist %LIBRARY_LIB%\\blis.lib exit 1         # [win]
     - if not exist %LIBRARY_LIB%\\libblis.lib exit 1      # [win]
 
