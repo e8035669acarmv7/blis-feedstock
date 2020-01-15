@@ -1,5 +1,5 @@
 {% set name = "blis" %}
-{% set version = "0.6.0" %}
+{% set version = "0.6.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: ad5765cc3f492d0c663f494850dafc4d72f901c332eb442f404814ff2995e5a9
+  sha256: 76b22f29b7789cf117c0873d2a6b2a6d61f903869168148f2e7306353c105c37
 
 build:
   number: 0
@@ -16,9 +16,9 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - clangdev               # [win or osx]
-    - llvmdev                # [win or osx]
-    - posix                  # [win]
+    - clangxx                # [win or osx]
+    - llvm-tools             # [win or osx]
+    - autotools_clang_conda  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
     - perl
@@ -34,7 +34,7 @@ test:
     - test -f $PREFIX/include/blis/cblas.h                # [unix]
     - if not exist %LIBRARY_INC%\\blis\\blis.h exit 1     # [win]
     - if not exist %LIBRARY_INC%\\blis\\cblas.h exit 1    # [win]
-    - if not exist %LIBRARY_BIN%\\libblis.2.dll exit 1    # [win]
+    - if not exist %LIBRARY_BIN%\\libblis.3.dll exit 1    # [win]
     - if not exist %LIBRARY_LIB%\\blis.lib exit 1         # [win]
     - if not exist %LIBRARY_LIB%\\libblis.lib exit 1      # [win]
 
