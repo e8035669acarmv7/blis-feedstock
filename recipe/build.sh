@@ -22,12 +22,12 @@ case $target_platform in
         ;;
     win-*)
         export LIBPTHREAD=
-        ./configure --disable-shared --enable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+        ./configure --disable-shared --enable-static --prefix=$PREFIX --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make -j${CPU_COUNT}
         make install
         make check -j${CPU_COUNT}
  
-        ./configure --enable-shared --disable-static --prefix=$PREFIX/Library --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+        ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
         make -j${CPU_COUNT}
         make install
         mv $PREFIX/lib/libblis.lib $PREFIX/lib/blis.lib
