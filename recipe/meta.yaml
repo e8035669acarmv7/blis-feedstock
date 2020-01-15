@@ -18,7 +18,7 @@ requirements:
     - {{ compiler('c') }}
     - clangxx                # [win or osx]
     - llvm-tools             # [win or osx]
-    - posix                  # [win]
+    - autotools_clang_conda  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
     - perl
