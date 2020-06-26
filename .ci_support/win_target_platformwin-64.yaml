@@ -1,5 +1,5 @@
 c_compiler:
-- vs2015
+- vs2017
 channel_sources:
 - conda-forge,defaults
 channel_targets:
@@ -9,8 +9,6 @@ perl:
 pin_run_as_build:
   perl:
     max_pin: x.x.x
-  vc:
-    max_pin: x
 target_platform:
 - win-64
 vc:
