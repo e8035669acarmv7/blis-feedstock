@@ -1,5 +1,5 @@
 {% set name = "blis" %}
-{% set version = "0.7.0" %}
+{% set version = "0.8.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,13 @@ package:
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: 7e345d666799e15bba570bd125f97042f17bf752a61dcf314486a6cd096d5f68
+  sha256: 5e05868c4a6cf5032a7492f8861653e939a8f907a4fa524bbb6e14394e170a3d
   patches:
     # upstreamed already (commit 787adad73b); can be dropped on next release
     - patches/xerbla.patch
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc<14]
 
 requirements:
