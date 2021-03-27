@@ -1,5 +1,5 @@
 {% set name = "blis" %}
-{% set version = "0.8.0" %}
+{% set version = "0.8.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,10 +7,10 @@ package:
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: 5e05868c4a6cf5032a7492f8861653e939a8f907a4fa524bbb6e14394e170a3d
+  sha256: 729694128719801e82fae7b5f2489ab73e4a467f46271beff09588c9265a697b
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc<14]
 
 requirements:
