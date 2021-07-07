@@ -8,6 +8,9 @@ package:
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
   sha256: 729694128719801e82fae7b5f2489ab73e4a467f46271beff09588c9265a697b
+  patches:
+    # patch by upstream to solve flame/blis#514
+    - patches/0001-Attempt-to-fix-Win64-AVX512-bug.patch
 
 build:
   number: 0
