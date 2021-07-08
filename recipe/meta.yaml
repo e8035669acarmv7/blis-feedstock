@@ -13,7 +13,7 @@ source:
     - patches/0001-Attempt-to-fix-Win64-AVX512-bug.patch
 
 build:
-  number: 0
+  number: 1
   skip: true  # [win and vc<14]
 
 requirements:
