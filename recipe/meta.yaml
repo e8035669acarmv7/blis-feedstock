@@ -1,19 +1,15 @@
-{% set name = "blis" %}
-{% set version = "0.8.1" %}
+{% set version = "0.9.0" %}
 
 package:
-  name: {{ name|lower }}
+  name: blis
   version: {{ version }}
 
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
-  sha256: 729694128719801e82fae7b5f2489ab73e4a467f46271beff09588c9265a697b
-  patches:
-    # patch by upstream to solve flame/blis#514
-    - patches/0001-Attempt-to-fix-Win64-AVX512-bug.patch
+  sha256: 1135f664be7355427b91025075562805cdc6cc730d3173f83533b2c5dcc2f308
 
 build:
-  number: 1
+  number: 0
   skip: true  # [win and vc<14]
 
 requirements:
@@ -24,6 +20,7 @@ requirements:
     - autotools_clang_conda  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
+    - make                   # [linux]
     - perl
     - python >=3.5
   host:
@@ -37,7 +34,7 @@ test:
     - test -f $PREFIX/include/blis/cblas.h                # [unix]
     - if not exist %LIBRARY_INC%\\blis\\blis.h exit 1     # [win]
     - if not exist %LIBRARY_INC%\\blis\\cblas.h exit 1    # [win]
-    - if not exist %LIBRARY_BIN%\\libblis.3.dll exit 1    # [win]
+    - if not exist %LIBRARY_BIN%\\libblis.4.dll exit 1    # [win]
     - if not exist %LIBRARY_LIB%\\blis.lib exit 1         # [win]
     - if not exist %LIBRARY_LIB%\\libblis.lib exit 1      # [win]
 
