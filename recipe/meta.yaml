@@ -20,6 +20,7 @@ requirements:
     - autotools_clang_conda  # [win]
     - m2-sed                 # [win]
     - sed                    # [unix]
+    - make                   # [linux]
     - perl
     - python >=3.5
   host:
