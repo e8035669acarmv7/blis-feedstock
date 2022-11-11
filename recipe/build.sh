@@ -21,7 +21,7 @@ case $target_platform in
         arch="arm64"
 	;;
     *-ppc64le)
-        arch="power9 power10"
+        arch="power9"
 	;;
     *)
         echo "Unsupported architecture: $target_platform"
@@ -54,5 +54,4 @@ make install
 make check -j${CPU_COUNT}
 
 # On Windows, move DLLs to the binary folder
-mv -f $PREFIX/lib/libblis.*.dll $PREFIX/bin/
-
+find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
