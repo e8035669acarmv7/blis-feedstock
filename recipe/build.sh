@@ -8,9 +8,6 @@ sed -i.bak 's/LDFLAGS := $(sort $(LDFLAGS))//g' common.mk
 # Multithreading
 MODEL="pthreads"
 
-# Disable static build
-export MK_ENABLE_STATIC=0
-
 
 # Map platform to BLIS target architecture 
 case $target_platform in
@@ -51,7 +48,7 @@ case $target_platform in
 esac
 
 
-./configure --prefix=$PREFIX --disable-static --enable-cblas --enable-threading="$MODEL" $EXTRA $arch
+./configure --prefix=$PREFIX --enable-cblas --enable-threading="$MODEL" $EXTRA $arch
 make -j${CPU_COUNT}
 make install
 
