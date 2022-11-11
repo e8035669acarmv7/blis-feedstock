@@ -12,10 +12,18 @@ case $target_platform in
         make install
         make check -j${CPU_COUNT}
         ;;
-    linux-*)
+    linux-64)
         ln -s `which $CC` $BUILD_PREFIX/bin/gcc
         export CC=$BUILD_PREFIX/bin/gcc
         ./configure --prefix=$PREFIX --enable-cblas --enable-threading=pthreads x86_64
+        make CC_VENDOR=gcc -j${CPU_COUNT}
+        make install
+        make check -j${CPU_COUNT}
+        ;;
+    linux-aarch64)
+        ln -s `which $CC` $BUILD_PREFIX/bin/gcc
+        export CC=$BUILD_PREFIX/bin/gcc
+        ./configure --prefix=$PREFIX --enable-cblas --enable-threading=pthreads arm64
         make CC_VENDOR=gcc -j${CPU_COUNT}
         make install
         make check -j${CPU_COUNT}
