@@ -8,4 +8,4 @@ provider:
   linux_ppc64le: azure
 build_platform:
   linux_aarch64: linux_64
-  linux_ppc64ls: linux_64
+  linux_ppc64le: linux_64
