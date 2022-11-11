@@ -42,17 +42,21 @@ case $target_platform in
 	;;
     win-*)
 	export LIBPTHREAD=""
-        cfamily=""
 	EXTRA="--enable-arg-max-hack"
 	;;
 esac
 
 
+# General case
 ./configure --prefix=$PREFIX --enable-cblas --enable-threading="$MODEL" $EXTRA $arch
 make -j${CPU_COUNT}
 make install
-
-# On Windows, move DLLs to the binary folder
-find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
-
 make check -j${CPU_COUNT}
+
+
+# Windows needs a lot of special pampering
+if [ $target_platform = "win-64" ]; then
+    find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
+    mv $PREFIX/lib/libblis.lib $PREFIX/lib/blis.lib
+    mv $PREFIX/lib/libblis.a $PREFIX/lib/libblis.lib
+fi
