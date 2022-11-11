@@ -51,7 +51,8 @@ esac
 ./configure --prefix=$PREFIX --disable-static --enable-cblas --enable-threading="$MODEL" $EXTRA $arch
 make -j${CPU_COUNT}
 make install
-make check -j${CPU_COUNT}
 
 # On Windows, move DLLs to the binary folder
 find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
+
+make check -j${CPU_COUNT}
