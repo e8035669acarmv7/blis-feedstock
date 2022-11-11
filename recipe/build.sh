@@ -8,6 +8,9 @@ sed -i.bak 's/LDFLAGS := $(sort $(LDFLAGS))//g' common.mk
 # Multithreading
 MODEL="pthreads"
 
+# Disable static build
+export MK_ENABLE_STATIC=0
+
 
 # Map platform to BLIS target architecture 
 case $target_platform in
