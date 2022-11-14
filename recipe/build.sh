@@ -13,16 +13,16 @@ MODEL="pthreads"
 case $target_platform in
     *-64)
         arch="x86_64"
-	;;
+        ;;
     *-aarch64)
         arch="arm64"
-	;;
+        ;;
     *-arm64)
         arch="arm64"
-	;;
-    *-ppc64le)
-        arch="power9"
-	;;
+        ;;
+    #*-ppc64le)
+    #    arch="power9"
+    #   ;;
     *)
         echo "Unsupported architecture: $target_platform"
         exit 1
@@ -42,7 +42,7 @@ case $target_platform in
 	;;
     win-*)
 	export LIBPTHREAD=""
-	EXTRA="--enable-arg-max-hack"
+	EXTRA="--enable-arg-max-hack --disable-shared --enable-static"
 	;;
 esac
 
@@ -54,8 +54,11 @@ make install
 make check -j${CPU_COUNT}
 
 
-# Windows needs a lot of special pampering
+# Windows-specific shenanigans
 if [ $target_platform = "win-64" ]; then
+   ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+    make -j${CPU_COUNT}
+    make install 
     find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
     mv $PREFIX/lib/libblis.lib $PREFIX/lib/blis.lib
     mv $PREFIX/lib/libblis.a $PREFIX/lib/libblis.lib
