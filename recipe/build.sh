@@ -33,17 +33,17 @@ esac
 case $target_platform in
     osx-*)
         export CC_VENDOR=clang
-	EXTRA=""
-	;;
+        EXTRA=""
+        ;;
     linux-*)
         ln -s `which $CC` $BUILD_PREFIX/bin/gcc
         export CC_VENDOR=gcc
-	EXTRA=""
-	;;
+        EXTRA=""
+        ;;
     win-*)
-	export LIBPTHREAD=""
-	EXTRA="--enable-arg-max-hack --disable-shared --enable-static"
-	;;
+        export LIBPTHREAD=""
+        EXTRA="--enable-arg-max-hack --disable-shared --enable-static"
+        ;;
 esac
 
 
@@ -55,11 +55,11 @@ make check -j${CPU_COUNT}
 
 
 # Windows-specific shenanigans
-if [ $target_platform = "win-64" ]; then
-   ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading=pthreads --enable-arg-max-hack x86_64
+case $target_platform in win-*)
+   ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading="$MODEL" --enable-arg-max-hack $arch
     make -j${CPU_COUNT}
     make install 
     find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
     mv $PREFIX/lib/libblis.lib $PREFIX/lib/blis.lib
     mv $PREFIX/lib/libblis.a $PREFIX/lib/libblis.lib
-fi
+esac
