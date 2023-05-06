@@ -7,10 +7,12 @@ package:
 source:
   url: https://github.com/flame/blis/archive/{{ version }}.tar.gz
   sha256: 1135f664be7355427b91025075562805cdc6cc730d3173f83533b2c5dcc2f308
+  patches:
+    # see https://github.com/flame/blis/issues/746
+    - patches/0001-add-missing-include.patch
 
 build:
-  number: 0
-  skip: true  # [win and vc<14]
+  number: 1
 
 requirements:
   build:
