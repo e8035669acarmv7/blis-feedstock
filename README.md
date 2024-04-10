@@ -1,11 +1,11 @@
-About blis
-==========
+About blis-feedstock
+====================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/blis-feedstock/blob/main/LICENSE.txt)
 
 Home: http://github.com/flame/blis
 
 Package license: BSD-3-Clause
-
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/blis-feedstock/blob/main/LICENSE.txt)
 
 Summary: BLAS-like Library Instantiation Software Framework
 
