@@ -11,6 +11,9 @@ MODEL="pthreads"
 
 # Map platform to BLIS target architecture 
 case $target_platform in
+    osx-64)
+        arch="intel64"
+        ;;
     *-64)
         arch="x86_64"
         ;;
