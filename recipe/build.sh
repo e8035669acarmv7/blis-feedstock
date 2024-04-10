@@ -57,9 +57,9 @@ make install
 make check -j${CPU_COUNT}
 
 
-# Windows-specific shenanigans
+# Windows-specific shenanigans (builds twice; first static above, then shared below)
 case $target_platform in win-*)
-   ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading="$MODEL" --enable-arg-max-hack $arch
+    ./configure --enable-shared --disable-static --prefix=$PREFIX --enable-cblas --enable-threading="$MODEL" --enable-arg-max-hack $arch
     make -j${CPU_COUNT}
     make install 
     find $PREFIX/lib -iname "libblis.*.dll" -exec mv {} $PREFIX/bin/ \;
